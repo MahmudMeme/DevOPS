@@ -1,0 +1,22 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+</head>
+<meta charset="UTF-8">
+</head>
+<body>
+
+<header>
+    <h1 th:text="${session.authorInfo.getName()}"></h1>
+</header>
+<section>
+    <h2 th:text="${session.authorInfo.getSurname()}"></h2>
+    <h2 th:text="${session.authorInfo.getBiography()}"></h2>
+    <h2>books:</h2>
+    <ul th:each="book: ${session.authorInfo.getBookList()}">
+        <li th:text="${book.getTitle()}  + '  ' + ${book.getGenre()} "></li>
+    </ul>
+<!--    <a href="authorList">nazad do listata</a>-->
+</section>
+
+</body>
+</html>

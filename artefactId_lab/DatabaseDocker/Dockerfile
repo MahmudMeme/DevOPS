@@ -1,0 +1,7 @@
+FROM postgres:15-alpine
+
+ENV POSTGRES_DB book-store
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWORD maki
+
+EXPOSE 5432

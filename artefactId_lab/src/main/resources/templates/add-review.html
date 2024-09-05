@@ -1,0 +1,36 @@
+<div class="container">
+    <div>
+
+
+        <h2 th:text="'Reviews for Book: ' + ${book.getTitle()}"></h2>
+        <div th:each="review : ${book.reviews}" class="review-container">
+            <p th:text="'Comment: ' + ${review.getDescription()}"></p>
+            <p th:text="'Rating: ' + ${review.getScore()}"></p>
+        </div>
+    </div>
+    <div>
+        <h2>Add Review for Book: <span th:text="${book.title}"></span></h2>
+        <form action="/books/addReviewSave" method="POST">
+            <input type="hidden" name="id" th:value="${book.getId()}"><br>
+
+            <label for="score">Score:</label>
+            <input type="number" id="score" name="score" required><br>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea><br>
+
+            <label>Date and Time:</label>
+            <input type="datetime-local" name="timestamp" required><br>
+
+            <input type="submit" value="Add Review">
+        </form>
+    </div>
+    <form  method="get" th:action="'/books/searchReviews'">
+        <label>Date from:</label>
+        <input type="datetime-local" name="timeFrom" required><br>
+
+        <label>Date to:</label>
+        <input type="datetime-local" name="timeTo" required><br>
+        <input type="submit" value="search">
+    </form>
+</div>

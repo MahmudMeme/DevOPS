@@ -1,0 +1,94 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">lab B</h1>
+            <h3 class="jumbotron-heading">All books</h3>
+        </div>
+    </section>
+
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-12" th:if="${books.size() > 0}">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col"> Book title</th>
+                            <th scope="col">ganre</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="book : ${books}">
+                            <td th:text="${book.getTitle()}"></td>
+                            <td th:text="${book.getGenre()}"></td>
+                            <td class="text-right">
+                                <th:block>
+                                    <form th:action="@{'/books/details/{id}' (id=${book.getId()})}"
+                                          th:method="Get">
+                                        <button type="submit"
+                                                class="btn btn-sm btn-primary">
+                                            <i class="fa fa-trash">Details</i>
+                                        </button>
+                                    </form>
+                                </th:block>
+                                <form th:action="@{'/books/add-author/{id}' (id=${book.getId()})}"
+                                      th:method="POST">
+                                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-trash">Add
+                                        Author</i></button>
+                                </form>
+                                <th:block>
+                                    <a th:href="@{'/books/edit-form/{id}' (id=${book.getId()})}"
+                                       class="btn btn-sm btn-info edit-product">
+                                        <i class="fa fa-trash">Edit</i>
+                                    </a>
+                                </th:block>
+                                <th:block>
+                                    <form th:action="@{'/books/delete/{id}' (id=${book.getId()})}"
+                                          th:method="DELETE">
+                                        <button type="submit"
+                                                class="btn btn-sm btn-danger delete-product">
+                                            <i class="fa fa-trash">Delete</i>
+                                        </button>
+                                    </form>
+                                </th:block>
+                                <th:block>
+                                    <form th:action="@{'/books/copy/{id}' (id=${book.getId()})}"
+                                          th:method="POST">
+                                        <button type="submit"
+                                                class="btn btn-sm btn-primary">
+                                            <i class="fa fa-trash">Copy</i>
+                                        </button>
+                                    </form>
+                                </th:block>
+                                <th:block>
+                                    <form th:action="@{'/books/addReview/{id}' (id=${book.getId()})}"
+                                          th:method="GET">
+                                        <button type="submit"
+                                                class="btn btn-sm btn-primary">
+                                            <i class="fa fa-trash">add review</i>
+                                        </button>
+                                    </form>
+                                </th:block>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <a href="/books/addNewBook" class="btn btn-block btn-dark add-product-btn">
+                            Add new book
+                        </a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+

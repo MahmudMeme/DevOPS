@@ -1,0 +1,27 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">lab b</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <form action="/books/add" method="POST">
+                    <input id="id" type="hidden" name="id"
+                            th:value="(${currentBooks} != null ? ${currentBooks.getId()} : '')">
+
+                    <div class="form-group">
+                        <label for="authorId">Select Author:</label>
+                        <select class="form-control" id="authorId" name="authorId">
+                            <option th:each="author : ${authorList}" th:value="${author.id}" th:text="${author.Fullname}"></option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add Author</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

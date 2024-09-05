@@ -1,0 +1,73 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">lab b</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <form action="/books/editBook" method="POST">
+                    <input id="id" type="hidden" name="id"
+                           th:value="(${currentBook} != null ? ${currentBook.getId()} : '')">
+                    <div class="form-group">
+                        <label for="title">Book title</label>
+                        <input type="text"
+                               class="form-control"
+                               id="title"
+                               name="title"
+                               th:value="(${currentBook} != null ? ${currentBook.getTitle()} : '')"
+                               required
+                               placeholder="Enter product name">
+                    </div>
+                    <div class="form-group">
+                        <label for="genre">genre</label>
+                        <input type="text"
+                               class="form-control"
+                               id="genre"
+                               name="genre"
+                               th:value="(${currentBook} != null ? ${currentBook.getGenre()} : '')"
+                               placeholder="Price">
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <input type="text"
+                               class="form-control"
+                               id="year"
+                               name="year"
+                               th:value="(${currentBook} != null ? ${currentBook.getYear()} : '')"
+                               placeholder="Quantity">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="bookStore" class="form-control">
+                            <option th:if="${currentBook} != null"
+                                    th:selected="${currentBook.getBookStore() != null &&
+                                currentBook.getBookStore().getId() == bs.getId()}"
+                                    th:each="bs : ${BookStoreList}"
+                                    th:value="${bs.getId()}"
+                                    th:text="${bs.getName()}">
+                            </option>
+                            <option th:if="${currentBook} == null"
+                                    th:each="bs : ${BookStoreList}"
+                                    th:value="${bs.getId()}"
+                                    th:text="${bs.getName()}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id">Select Author:</label>
+                        <select class="form-control" id="authorId" name="authorId">
+                            <option th:each="author : ${authorList}" th:value="${author.id}"
+                                    th:text="${author.getFullname()}"></option>
+                        </select>
+                    </div>
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                    <a type="button" class="btn btn-primary" href="/books">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
