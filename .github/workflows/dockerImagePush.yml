@@ -23,6 +23,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./artefactid_lab
           push: true
           tags: mahmud740/spapp:2.0
