@@ -17,24 +17,26 @@ jobs:
 
 
     steps:
-      # Step 1: Checkout the repository
+      # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Get the list of commits in the past month
+      # Get the list of commits in the past month
       - name: Get the changes
         run: |
           git fetch --all
           CHANGES=$(git log --since="1 month ago" --pretty=format:"%h - %an: %s" --no-merges)
           echo "$CHANGES"
-          echo "::set-output name=repo_changes::$CHANGES"
+          echo "repo_changes=$CHANGES" >> $GITHUB_ENV
 
-      # Step 3: Create an issue with the changes
+      # Write the changes to a file
+      - name: Write changes to a file
+        run: echo "$repo_changes" > changes.txt
+
+      # Create an issue with the changes
       - name: Create an issue with changes
         uses: peter-evans/create-issue-from-file@v4
         with:
           title: "Monthly Repository Changes Notification"
-          content: |
-            Here are the changes made to the repository in the last month:
-            ${{ steps.get_the_changes.outputs.repo_changes }}
-          labels: "monthly-update"  
+          content-filepath: README.md # Use file for content
+          labels: "monthly-update"
