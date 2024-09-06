@@ -31,12 +31,12 @@ jobs:
 
       # Write the changes to a file
       - name: Write changes to a file
-        run: echo "$repo_changes" > changes.txt
+        run: echo "$repo_changes" > changes #.txt
 
       # Create an issue with the changes
       - name: Create an issue with changes
         uses: peter-evans/create-issue-from-file@v4
         with:
           title: "Monthly Repository Changes Notification"
-          content-filepath: README.md # Use file for content
+          content-filepath: changes # Use file for content
           labels: "monthly-update"
