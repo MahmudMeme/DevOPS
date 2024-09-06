@@ -1,12 +1,13 @@
 name: Monthly Repo Changes Notification
 
-# on:
-#   schedule:
-#     - cron: '0 0 1 * *'  # prviot den od sekoj mesec
 on:
-  push:
-      branches:
-        - "master" 
+  schedule:
+    - cron: '0 0 1 * *'  # prviot den od sekoj mesec
+# za tetiranje bese
+# on:
+#   push:
+#       branches:
+#         - "master" 
 
 jobs:
   notify:
@@ -17,11 +18,10 @@ jobs:
 
 
     steps:
-      # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Get the list of commits in the past month
+      # lista od comiti
       - name: Get the changes
         run: |
           git fetch --all
@@ -29,14 +29,14 @@ jobs:
           echo "$CHANGES"
           echo "repo_changes=$CHANGES" >> $GITHUB_ENV
 
-      # Write the changes to a file
+      # zapisuvanje vo file
       - name: Write changes to a file
         run: echo "$repo_changes" > changes #.txt
 
-      # Create an issue with the changes
+      # pravenje issue
       - name: Create an issue with changes
         uses: peter-evans/create-issue-from-file@v4
         with:
           title: "Monthly Repository Changes Notification"
-          content-filepath: changes # Use file for content
+          content-filepath: changes 
           labels: "monthly-update"
