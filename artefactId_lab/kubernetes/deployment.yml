@@ -4,6 +4,7 @@ metadata:
   namespace: books-app
   name: app-deployment
 spec:
+  #replicas: 5
   replicas: 1
   strategy:
     type: RollingUpdate
