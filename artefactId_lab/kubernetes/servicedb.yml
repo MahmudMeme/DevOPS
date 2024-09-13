@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: servicedb
+  namespace: books-app
+spec:
+  selector:
+    app: statefulset-db
+  ports:
+    - port: 5432
+      protocol: TCP
+      targetPort: 5432

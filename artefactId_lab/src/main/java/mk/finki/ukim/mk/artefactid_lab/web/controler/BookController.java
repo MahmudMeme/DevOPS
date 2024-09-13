@@ -84,20 +84,6 @@ public class BookController {
         return "master-template";
     }
 
-    @PostMapping("/editBook")
-    public String saveEdited(@RequestParam(required = false) String error,
-                             @RequestParam Long id,
-                             @RequestParam String title,
-                             @RequestParam String genre,
-                             @RequestParam Integer year,
-                             @RequestParam Long bookStore,
-                             @RequestParam Long authorId) {
-//        Optional<Book> book = bookService.findBookById(id);
-//        Author author = authorService.findById(id);
-//        BookStore bookStore1 = bookStoreService.findById(bookStore).get();
-        bookService.editBook(id, title, genre, year, bookStore, authorId);
-        return "redirect:/books";
-    }
 
     @PostMapping("/delete/{id}")
     public String deleteBook(@RequestParam(required = false) String error, @PathVariable Long id) {

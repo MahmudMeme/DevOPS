@@ -1,0 +1,110 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: books-app
+  name: db-pvc
+spec:
+  #storageClassName: hostpath
+  #storageClassName: standard
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-db
+  namespace: books-app
+spec:
+  selector:
+    matchLabels:
+      app: statefulset-db
+  serviceName: servicedb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: statefulset-db
+    spec:
+      containers:
+        - name: db-postgres
+          image: postgres:15
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: app-configmap
+                  key: DATABASE_NAME
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: app-secrets
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: app-secrets
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: db-volume
+      volumes:
+        - name: db-volume
+          persistentVolumeClaim:
+            claimName: db-pvc
+
+#
+#apiVersion: apps/v1
+#kind: StatefulSet
+#metadata:
+#  name: statefullset-db
+#  namespace: books-app
+#spec:
+#  selector:
+#    matchLabels:
+#      app: statefullset-db
+#  serviceName: servicedb
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: statefullset-db
+#    spec:
+#      containers:
+#        - name: db-postgres
+#          image: postgres:15
+#          ports:
+#            - containerPort: 5432
+#          env:
+#            - name: POSTGRES_USER
+#              valueFrom:
+#                secretKeyRef:
+#                  name: app-secrets
+#                  key: username
+#            - name: POSTGRES_PASSWORD
+#              valueFrom:
+#                secretKeyRef:
+#                  name: app-secrets
+#                  key: password
+#            - name: POSTGRES_DB
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: app-configmap
+#                  key: DATABASE_NAME
+#          volumeMounts:
+#            - name: postgres-data
+#              mountPath: /var/lib/postgresql/data
+#  volumeClaimTemplates:
+#    - metadata:
+#        name: postgres-data
+#      spec:
+#        accessModes: [ "ReadWriteOnce" ]
+#        resources:
+#          requests:
+#            storage: 1Gi
+#        storageClassName: hostpath

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: books-app
+  name: app-configmap
+data:
+  DATABASE_URL: "jdbc:postgresql://servicedb:5432/book-store"
+#  DATABASE_URL: "jdbc:postgresql://localhost:5432/book-store"
+  DATABASE_NAME : "book-store"

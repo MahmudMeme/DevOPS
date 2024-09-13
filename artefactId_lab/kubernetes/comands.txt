@@ -1,0 +1,12 @@
+kubectl apply -f namespaceapp.yml
+kubectl apply -f secrets.yml
+kubectl apply -f configmap.yml
+kubectl apply -f statefulset.yml
+kubectl apply -f servicedb.yml
+kubectl apply -f deployment.yml
+kubectl apply -f serviceapp.yml
+kubectl apply -f ingress.yml
+
+kubectl delete -f namespaceapp.yml
+
+kubectl config set-context --current --namespace <>
