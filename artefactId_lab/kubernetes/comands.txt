@@ -10,3 +10,5 @@ kubectl apply -f ingress.yml
 kubectl delete -f namespaceapp.yml
 
 kubectl config set-context --current --namespace <>
+
+docker-compose up -d -build
